@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -17,6 +18,7 @@ public class Spawner : MonoBehaviour
 
     private ObjectPool<Enemy> _enemyPool;
 
+    //Create the object pool
     private void Awake()
     {
         _enemyPool = new ObjectPool<Enemy>(
@@ -25,10 +27,16 @@ public class Spawner : MonoBehaviour
             OnReturnToPool,
             OnDestroyPooledObject,
             true,
-            500,
-            1000
+            enemyCount,
+            enemyCount * 2
             );
 
+    }
+
+    //Preload enemies
+    private void Start()
+    {
+        PreloadEnemies();
     }
 
     // Update is called once per frame
@@ -66,6 +74,16 @@ public class Spawner : MonoBehaviour
     private void OnDestroyPooledObject(Enemy enemy)
     {
         Destroy(enemy.gameObject);
+    }
+
+    //Final function will preload all enemy types needed for waves 
+    private void PreloadEnemies()
+    {
+        for (int i = 0; i < enemyCount; i++)
+        {
+            Enemy preloadedEnemy = _enemyPool.Get();
+            _enemyPool.Release(preloadedEnemy);
+        }
     }
 
     private void SpawnEnemy()
