@@ -513,10 +513,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9dae0513c577c468646c427fa48ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCount: 250
+  enemyCount: 500
   enemyPrefab: {fileID: 1481321552205046681, guid: 685934c21d0f02a48b17dbbde5db36f1, type: 3}
   spawnPoint: {fileID: 1663229425}
-  delayBtwSpawns: 0.1
+  delayBtwSpawns: 0.25
 --- !u!4 &1716778981
 Transform:
   m_ObjectHideFlags: 0

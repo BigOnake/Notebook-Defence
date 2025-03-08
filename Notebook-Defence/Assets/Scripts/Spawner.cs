@@ -43,13 +43,11 @@ public class Spawner : MonoBehaviour
     void Update()
     {
         _spawnTimer -= Time.deltaTime;
-        if (_spawnTimer <= 0f)
+
+        if (_spawnTimer < 0f && _enemiesSpawned < enemyCount)
         {
             _spawnTimer = delayBtwSpawns;
-            if (_enemiesSpawned < enemyCount)
-            {
-                SpawnEnemy();
-            }
+            SpawnEnemy();
         }
     }
 
