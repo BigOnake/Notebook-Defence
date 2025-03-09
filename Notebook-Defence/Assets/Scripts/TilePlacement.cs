@@ -1,15 +1,23 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TilePlacement : MonoBehaviour
 {
-    [SerializeField] private bool isOccupied = false;
-   
-    
-    void Start()
+    [SerializeField] bool isOccupied = false;
+    public Button buttonListener;
+
+    private void Start()
     {
+        buttonListener.onClick.AddListener(P);
     }
 
-    void Update()
+    private void OnDestroy()
     {
+        buttonListener.onClick.RemoveListener(P);
+    }
+
+    public void P()
+    {
+        isOccupied = true;
     }
 }
