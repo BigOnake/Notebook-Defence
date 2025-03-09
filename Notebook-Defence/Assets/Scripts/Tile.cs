@@ -5,6 +5,7 @@ public class Tile : MonoBehaviour
 {
     public bool isOccupied;
     public UnityEvent onEmpty, onOccupied;
+    private GameObject tower;
     
     void Start()
     {
@@ -25,8 +26,9 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void changeFlag()
+    public void AddTower(GameObject prefab)
     {
         isOccupied = !isOccupied;
+        tower = Instantiate(prefab, transform.position, transform.rotation);
     }
 }
