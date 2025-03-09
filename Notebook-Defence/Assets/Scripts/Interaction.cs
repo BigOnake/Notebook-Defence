@@ -9,9 +9,11 @@ public class Interaction : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        checkInteraction();
+
+        if (Input.GetMouseButtonDown(0) && currentInteractable)
         {
-            checkInteraction();
+            currentInteractable.Interact();
         }
     }
 
@@ -39,14 +41,15 @@ public class Interaction : MonoBehaviour
     private void SetNewCurrentInteractable(Interactable newInteractable)
     {
         currentInteractable = newInteractable;
-        currentInteractable.EnableOutline();
+        Debug.Log(currentInteractable.gameObject.name + " is curInter");
+        //currentInteractable.EnableOutline();
     }
 
     private void DisableCurrentInteractable()
     {
         if(currentInteractable)
         {
-            currentInteractable.DisableOutline();
+            //currentInteractable.DisableOutline();
             currentInteractable = null; 
         }
     }
