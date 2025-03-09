@@ -14,13 +14,30 @@ public class Interaction : MonoBehaviour
 
     void Update()
     {
-        if(!EventSystem.current.IsPointerOverGameObject())
+        if(!isOverUI())
         {
+            Debug.Log("Mouse is not over UI");
             ClickOnInteractable();
         }
-        else 
+    }
+
+    private void ClickOnInteractable()
+    {
+        CastRay();
+
+        if (Input.GetMouseButtonDown(0))
         {
-            ClickOnUI();
+            CheckInteraction();
+
+            if (currentInteractable)
+            {
+                currentInteractable.Interact();
+            }
+            else
+            {
+                selectedTile = null;
+                TileManager.Instance.UnselectTile();
+            }
         }
     }
 
@@ -63,33 +80,18 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    private void ClickOnInteractable()
+    public void PlaceTower()
     {
-        CastRay();
+        Debug.Log("Place tower button is pressed");
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            CheckInteraction();
-
-            if (currentInteractable)
-            {
-                currentInteractable.Interact();
-            }
-            else
-            {
-                selectedTile = null;
-                TileManager.Instance.UnselectTile();
-            }
-        }
-    }
-
-    private void ClickOnUI()
-    {
-        Debug.Log("Mouse is over UI");
-
-        if (Input.GetMouseButtonDown(0) && selectedTile)
+        if (selectedTile)
         {
             TileManager.Instance.SelectTile(selectedTile);
         }
+    }
+
+    private bool isOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
 }
