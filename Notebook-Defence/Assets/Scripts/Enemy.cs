@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,9 +12,10 @@ public class Enemy : MonoBehaviour
 
     private EnemyWayPoints wayPoints;
 
+    private ObjectPool<Enemy> _enemyPool;
+
     void Start()
     {
-        transform.position = spawnPosition.position;
         LoadWayPoints();
     }
 
@@ -42,5 +44,11 @@ public class Enemy : MonoBehaviour
            if(curTargetPoint < wayPoints.wayPointList.Length - 1)
             { curTargetPoint++; }
         }
+    }
+
+    public void SetSpawnPosition(Transform spawnPoint)
+    {
+        spawnPosition = spawnPoint;
+        transform.position = spawnPoint.position;
     }
 }
