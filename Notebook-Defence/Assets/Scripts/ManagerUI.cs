@@ -3,32 +3,68 @@ using UnityEngine;
 public class ManagerUI : MonoBehaviour
 {
     public static ManagerUI Instance;
-    [SerializeField] Canvas shopUI;
+    [SerializeField] Canvas UI;
+    [SerializeField] GameObject ShopUI;
+    [SerializeField] GameObject UpgradeUI;
 
     private void Start()
     {
         Instance = this;
         DisableShop();
+        DisableUpgrades();
     }
 
-    public void DisplayTowerShop()
+    public void DisplayShop()
     {
         EnableShop();
     }
 
+    public void HideShop()
+    {
+        DisableShop();
+    }
+
+    public void DisplayUpgrades()
+    {
+        EnableUpgrades();
+    }
+
+    public void HideUpgrades()
+    {
+        DisableUpgrades();
+    }
+
     private void DisableShop()
     {
-        if (shopUI.enabled == true)
+        if (ShopUI.activeSelf)
         {
-            shopUI.enabled = false;
+            ShopUI.SetActive(false);
         }
     }
 
     private void EnableShop()
     {
-        if(shopUI.enabled == false)
+        if (!ShopUI.activeSelf)
         {
-            shopUI.enabled = true;
+            UpgradeUI.SetActive(false);
+            ShopUI.SetActive(true);
+        }
+    }
+
+    private void DisableUpgrades()
+    {
+        if (UpgradeUI.activeSelf)
+        {
+            UpgradeUI.SetActive(false);
+        }
+    }
+
+    private void EnableUpgrades()
+    {
+        if (!UpgradeUI.activeSelf)
+        {
+            ShopUI.SetActive(false);
+            UpgradeUI.SetActive(true);
         }
     }
 }

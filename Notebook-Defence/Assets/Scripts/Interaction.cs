@@ -16,31 +16,11 @@ public class Interaction : MonoBehaviour
     {
         if(!EventSystem.current.IsPointerOverGameObject())
         {
-            CastRay();
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                CheckInteraction();
-
-                if (currentInteractable)
-                {
-                    currentInteractable.Interact();
-                }
-                else
-                {
-                    selectedTile = null;
-                    TileManager.Instance.UnselectTile();
-                }
-            }
+            ClickOnInteractable();
         }
         else 
         {
-            Debug.Log("Mouse is over UI");
-
-            if(Input.GetMouseButtonDown(0) && selectedTile)
-            {
-                TileManager.Instance.SelectTile(selectedTile);
-            }
+            ClickOnUI();
         }
     }
 
@@ -80,6 +60,36 @@ public class Interaction : MonoBehaviour
         if(currentInteractable)
         {
             currentInteractable = null; 
+        }
+    }
+
+    private void ClickOnInteractable()
+    {
+        CastRay();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            CheckInteraction();
+
+            if (currentInteractable)
+            {
+                currentInteractable.Interact();
+            }
+            else
+            {
+                selectedTile = null;
+                TileManager.Instance.UnselectTile();
+            }
+        }
+    }
+
+    private void ClickOnUI()
+    {
+        Debug.Log("Mouse is over UI");
+
+        if (Input.GetMouseButtonDown(0) && selectedTile)
+        {
+            TileManager.Instance.SelectTile(selectedTile);
         }
     }
 }
