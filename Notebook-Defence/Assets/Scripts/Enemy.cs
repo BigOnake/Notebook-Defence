@@ -16,7 +16,6 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        //transform.position = spawnPosition.position;
         LoadWayPoints();
     }
 
@@ -45,12 +44,6 @@ public class Enemy : MonoBehaviour
            if(curTargetPoint < wayPoints.wayPointList.Length - 1)
             { curTargetPoint++; }
         }
-    }
-
-    //Enemy Spawn Pooling
-    public void SetPool(ObjectPool<Enemy> pool)
-    {
-        _enemyPool = pool;
     }
 
     public void SetSpawnPosition(Transform spawnPoint)

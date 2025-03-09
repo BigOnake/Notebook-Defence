@@ -1,93 +1,63 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Spawner : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private int enemyCount = 10;
-    [SerializeField] private Enemy enemyPrefab;
+    [SerializeField] private Enemy[] enemyPrefabs;
 
     [Header("Spawning")]
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private float delayBtwSpawns = 1f;
 
-
     private float _spawnTimer;
     private int _enemiesSpawned;
 
-    private ObjectPool<Enemy> _enemyPool;
+    private Dictionary<Enemy, ObjectPooler<Enemy>> _enemyPools;
 
     //Create the object pool
     private void Awake()
     {
-        _enemyPool = new ObjectPool<Enemy>(
-            CreateEnemy,
-            OnTakeFromPool,
-            OnReturnToPool,
-            OnDestroyPooledObject,
-            true,
-            enemyCount,
-            enemyCount * 2
-            );
+        _enemyPools = new Dictionary<Enemy, ObjectPooler<Enemy>>();
 
+        //Create pools dynamically based on the provided prefabs
+        foreach (var enemyPrefab in enemyPrefabs)
+        {
+            _enemyPools[enemyPrefab] = new ObjectPooler<Enemy>(enemyPrefab, transform, enemyCount, enemyCount * 2);
+        }
     }
 
-    //Preload enemies
-    private void Start()
-    {
-        PreloadEnemies();
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        _spawnTimer -= Time.deltaTime;
+        if (_enemiesSpawned >= enemyCount) return; //Check if all enemies have been spawned and return if so
 
-        if (_spawnTimer < 0f && _enemiesSpawned < enemyCount)
+        _spawnTimer -= Time.deltaTime;
+        if (_spawnTimer < 0f)
         {
             _spawnTimer = delayBtwSpawns;
             SpawnEnemy();
         }
     }
 
-    private Enemy CreateEnemy()
-    {
-        Enemy enemyInstance = Instantiate(enemyPrefab);
-        enemyInstance.SetPool(_enemyPool);
-        return enemyInstance;
-    }
-
-    private void OnTakeFromPool(Enemy enemy)
-    {
-        enemy.SetSpawnPosition(spawnPoint);
-        enemy.gameObject.SetActive(true);
-    }
-
-    private void OnReturnToPool(Enemy enemy)
-    {
-        enemy.gameObject.SetActive(false);
-    }
-
-    private void OnDestroyPooledObject(Enemy enemy)
-    {
-        Destroy(enemy.gameObject);
-    }
-
-    //Final function will preload all enemy types needed for waves 
-    private void PreloadEnemies()
-    {
-        for (int i = 0; i < enemyCount; i++)
-        {
-            Enemy preloadedEnemy = _enemyPool.Get();
-            _enemyPool.Release(preloadedEnemy);
-        }
-    }
-
     private void SpawnEnemy()
     {
-        Enemy newInstance = _enemyPool.Get();
-        _enemiesSpawned++;
+        if (enemyPrefabs.Length == 0) return;   
+
+        Enemy randomEnemy = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)];
+
+        if (_enemyPools.TryGetValue(randomEnemy, out var pool))
+        {
+            Enemy instance = pool.GetObject();
+            instance.transform.position = spawnPoint.position;
+
+            instance.SetSpawnPosition(spawnPoint);
+
+            _enemiesSpawned++;
+        }
     }
 
 }
