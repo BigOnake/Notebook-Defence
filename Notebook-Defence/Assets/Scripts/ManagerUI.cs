@@ -18,11 +18,17 @@ public class ManagerUI : MonoBehaviour
 
     private void DisableShop()
     {
-        shopUI.gameObject.SetActive(false);
+        if (shopUI.enabled == true)
+        {
+            shopUI.enabled = false;
+        }
     }
 
     private void EnableShop()
     {
-        shopUI.gameObject.SetActive(value: true);
+        if(shopUI.enabled == false)
+        {
+            shopUI.enabled = true;
+        }
     }
 }
