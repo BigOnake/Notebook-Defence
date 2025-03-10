@@ -64,6 +64,7 @@ public class Enemy : MonoBehaviour
         curTargetPoint = 0;
         enemyHealth.ResetHealth();
         gameObject.SetActive(false); // Hide the enemy
+        WaveController.Instance.DecreaseAliveEnemies();
         _enemyPool.ReleaseObject(this); // Return it to the pool
     }
 
