@@ -58,4 +58,9 @@ public class TurretProjectile : MonoBehaviour
     {
         _pooler.ReleaseObject(projectile);
     }
+
+    public void ChangeFireDelay(float fireRate)
+    {
+        delayBtwAttacks = 1f / fireRate;
+    }
 }
