@@ -17,6 +17,10 @@ public class TileManager : MonoBehaviour
         {
             selectedTile.AddTower(towerPrefab);
         }
+        else
+        {
+            Debug.Log("Tile is not selected");
+        }
     }
 
     public void SelectTile(Tile newTile)
