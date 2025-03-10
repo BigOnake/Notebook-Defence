@@ -15,6 +15,7 @@ public class ObjectPooler<T> where T : MonoBehaviour
         _parent = parent;
 
         _poolContainer = new GameObject($"Pool - {_prefab.name}");
+        _poolContainer.transform.SetParent( parent );
 
         _pool = new ObjectPool<T>(
             CreateObject,

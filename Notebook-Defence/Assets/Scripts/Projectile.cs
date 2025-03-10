@@ -39,17 +39,22 @@ public class Projectile : MonoBehaviour
         if (distanceToTarget < minDistanceToDealDamage)
         {
             OnEnemyHit?.Invoke(_enemyTarget, _damage); //emitt that an enemy got hit
-            //_enemyTarget.EnemyHealth.DealDamage(_damage);
+            _enemyTarget = null;
+            gameObject.SetActive(false);
             //_turretOwner.ResetTurretProjectile();
-            //Return to object pooler
+            _turretOwner.ReleaseProjectile(this);
+            //_enemyTarget.EnemyHealth.DealDamage(_damage);
         }
     }
 
     private void RotateProjectile()
     {
-        Vector3 enemyPos = _enemyTarget.transform.position - transform.position;
-        float angle = Vector3.SignedAngle(transform.up, enemyPos, transform.forward);
-        transform.Rotate(0f, 0f, angle);
+        if (_enemyTarget != null)
+        {
+            Vector3 enemyPos = _enemyTarget.transform.position - transform.position;
+            float angle = Vector3.SignedAngle(transform.up, enemyPos, transform.forward);
+            transform.Rotate(0f, 0f, angle);
+        }
     }
 
     public void SetEnemy(Enemy enemy)

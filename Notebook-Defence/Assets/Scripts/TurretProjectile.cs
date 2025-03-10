@@ -30,15 +30,14 @@ public class TurretProjectile : MonoBehaviour
             LoadProjectile();
         }
 
-        if (Time.time > _nextAttackTime) //figure what this means
+        if (Time.time > _nextAttackTime && _currentProjectileLoaded != null) //figure what this means
         {
-            if (_turret.CurrentEnemyTarget != null && _currentProjectileLoaded != null /*&& 
-                _turret.CurrentEnemyTarget.EnemyHealth.CurrentHealth > 0f*/)
+            if (_turret.CurrentEnemyTarget != null /*&& _turret.CurrentEnemyTarget.EnemyHealth.CurrentHealth > 0f*/)
             {
-                _currentProjectileLoaded.transform.SetParent(null);
                 _currentProjectileLoaded.SetEnemy(_turret.CurrentEnemyTarget);
+                _nextAttackTime = Time.time + delayBtwAttacks;
+                _currentProjectileLoaded = null;
             }
-            _nextAttackTime = Time.time + delayBtwAttacks;
         }
     }
 
@@ -46,8 +45,17 @@ public class TurretProjectile : MonoBehaviour
     {
         _currentProjectileLoaded = _pooler.GetObject();
         _currentProjectileLoaded.transform.localPosition = projectileSpawnPosition.position;
-        _currentProjectileLoaded.transform.SetParent(projectileSpawnPosition);
         //_currentProjectileLoaded.ResetProjectile();
         _currentProjectileLoaded.InitializeProjectile(this, damage); //initializes values inside projectile for turret owner and damage
+    }
+
+    //public void ResetTurretProjectile()
+    //{
+
+    //}
+
+    public void ReleaseProjectile(Projectile projectile)
+    {
+        _pooler.ReleaseObject(projectile);
     }
 }

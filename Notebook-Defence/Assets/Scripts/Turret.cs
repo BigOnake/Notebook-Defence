@@ -25,7 +25,6 @@ public class Turret : MonoBehaviour
     void Update()
     {
         GetCurrentEnemyTarget();
-       // RotateProjectileTowardsTarget();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -51,6 +50,8 @@ public class Turret : MonoBehaviour
 
     private void GetCurrentEnemyTarget()
     {
+        _enemies.RemoveAll(enemy => enemy == null /*|| enemy.EnemyHealth.CurrentHealth <= 0*/);
+
         if (_enemies.Count <= 0)
         {
             CurrentEnemyTarget = null;
@@ -59,19 +60,6 @@ public class Turret : MonoBehaviour
 
         CurrentEnemyTarget = _enemies[0];
     }
-
-    //private void RotateProjectileTowardsTarget()
-    //{
-    //    if (_enemies.Count <= 0)
-    //    {
-    //        CurrentEnemyTarget = null;
-    //        return;
-    //    }
-
-    //    Vector3 targetPos = CurrentEnemyTarget.transform.position - transform.position;
-    //    float angle = Vector3.SignedAngle(transform.up, targetPos, transform.forward);
-    //    projectileSpawnPosition.rotation = Quaternion.Euler(0f, 0f, angle);
-    //}
 
     public Transform GetProjectileSpawnPosition() { return projectileSpawnPosition; }
     public Projectile GetCurrentProjectilePrefab() { return projectilePrefab; }
