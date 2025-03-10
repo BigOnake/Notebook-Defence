@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
         if (distance < 0.1f)
         {
            if(curTargetPoint < wayPoints.wayPointList.Length - 1)
-            { curTargetPoint++; }
+           { curTargetPoint++; }
         }
     }
 
