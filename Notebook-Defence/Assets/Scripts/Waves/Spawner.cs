@@ -14,7 +14,7 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] float spawnRateIncrease = 1.0f;
     [SerializeField] float minSpawnDelay = 0.25f;
-    [SerializeField] float maxSpawnDelay = 0.25f;
+    //[SerializeField] float maxSpawnDelay = 0.25f;
     [SerializeField] private Enemy[] enemyPrefabs;
 
     [Header("Spawning")]
@@ -42,25 +42,21 @@ public class Spawner : MonoBehaviour
         //Create pools dynamically based on the provided prefabs
         foreach (var enemyPrefab in enemyPrefabs)
         {
-            _enemyPools[enemyPrefab] = new ObjectPooler<Enemy>(enemyPrefab, transform, _enemyCount, _enemyCount * 2);
+            _enemyPools[enemyPrefab] = new ObjectPooler<Enemy>(enemyPrefab, transform, baseEnemyCount, baseEnemyCount * 2);
         }
     }
 
     void Update()
     {
-        if (!waveActive) return;
-
-        if (_enemiesSpawned >= _enemyCount)
+        if (waveActive)
         {
-            waveActive = false;
-            return;
-        }
+            _spawnTimer -= Time.deltaTime;
 
-        _spawnTimer -= Time.deltaTime;
-        if (_spawnTimer <= 0f)
-        {
-            _spawnTimer = _delayBtwSpawns;
-            SpawnEnemy();
+            if (_spawnTimer <= 0f)
+            {
+                _spawnTimer = _delayBtwSpawns;
+                SpawnEnemy();
+            }
         }
     }
 
@@ -77,6 +73,12 @@ public class Spawner : MonoBehaviour
             instance.Initialize(pool, spawnPoint);
             _enemiesSpawned++;
         }
+
+        if (_enemiesSpawned >= _enemyCount)
+        {
+            waveActive = false;
+        }
+
     }
 
     public void StartWave(int waveNum)

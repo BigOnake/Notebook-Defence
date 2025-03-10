@@ -6,25 +6,25 @@ public class WaveController : MonoBehaviour
     [SerializeField] private Spawner enemySpawner;
     [SerializeField] private int aliveEnemies;
     [SerializeField] private int currentWave;
+    [SerializeField] private int maxWave;
 
     void Start()
     {
         Instance = this;
-
+        currentWave = 0;
+        maxWave = 5;
         enemySpawner.GetComponent<Spawner>();
     }
 
     void Update()
     {
-        if(isAllDead())
+        if(isAllDead() && currentWave <= maxWave)
         {
             //TODO Call to start a new wave
-            /* 
-             * enemySpawner.StartWave(currentWave);
-             * SetCurrentEnemyCounter(enemySpawner.GetWaveEnemyCount());
-             * IncreaseWave();
-             */
 
+            enemySpawner.StartWave(currentWave);
+            SetCurrentEnemyCounter(enemySpawner.GetWaveEnemyCount());
+            IncreaseWaveCounter();
         }
     }
 

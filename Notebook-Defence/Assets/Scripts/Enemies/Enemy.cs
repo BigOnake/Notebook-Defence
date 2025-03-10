@@ -13,13 +13,11 @@ public class Enemy : MonoBehaviour
     private EnemyWayPoints wayPoints;
     private ObjectPooler<Enemy> _enemyPool;
     public EnemyHealth enemyHealth;
-    private Collider2D collider;
 
     void Start()
     {
         enemyHealth = GetComponent<EnemyHealth>();
-        collider = GetComponent<Collider2D>();
-        collider.enabled = true;
+        GetComponent<Collider2D>().enabled = true;
         LoadWayPoints();
     }
 
