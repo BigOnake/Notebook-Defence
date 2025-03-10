@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 9000816639416890293}
   - component: {fileID: 2333769210029322616}
   - component: {fileID: 8776885142933034462}
+  - component: {fileID: 838154868964923008}
   m_Layer: 0
   m_Name: Basic_Tower
   m_TagString: Untagged
@@ -114,12 +115,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d439d6a5375584a821406078b035a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpawnPos: {fileID: 0}
+  projectileSpawnPosition: {fileID: 3339224097256422702}
   projectilePrefab: {fileID: 0}
   fireRate: 1
   attackRange: 4
   _enemies: []
   CurrentEnemyTarget: {fileID: 0}
+--- !u!114 &838154868964923008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7898085383834715482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df01e54e33fa8cc46839739d557fc112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayBtwAttacks: 2
+  damage: 2
 --- !u!1 &7935497480607449075
 GameObject:
   m_ObjectHideFlags: 0

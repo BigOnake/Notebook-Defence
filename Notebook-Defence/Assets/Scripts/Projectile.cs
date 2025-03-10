@@ -8,11 +8,20 @@ public class Projectile : MonoBehaviour
     [SerializeField] protected float moveSpeed = 10f;
     [SerializeField] private float minDistanceToDealDamage = 0.1f;
 
-    public TurretProjectile TurretOwner {  get; set; }
-
-    public float Damage {  get; set; }
-
+    private float _damage = 5f;
+    private TurretProjectile _turretOwner;
     protected Enemy _enemyTarget;
+
+    public float Damage 
+    { 
+        get => _damage; 
+        set => _damage = value; 
+    }
+    public TurretProjectile TurretOwner
+    {
+        get => _turretOwner;
+        set => _turretOwner = value;
+    }
 
     protected virtual void Update()
     {
@@ -29,9 +38,9 @@ public class Projectile : MonoBehaviour
         float distanceToTarget = (_enemyTarget.transform.position - transform.position).magnitude;
         if (distanceToTarget < minDistanceToDealDamage)
         {
-            OnEnemyHit?.Invoke(_enemyTarget, Damage);
-            _enemyTarget.EnemyHealth.DealDamage(Damage);
-            TurretOwner.ResetTurretProjectile();
+            OnEnemyHit?.Invoke(_enemyTarget, _damage); //emitt that an enemy got hit
+            //_enemyTarget.EnemyHealth.DealDamage(_damage);
+            //_turretOwner.ResetTurretProjectile();
             //Return to object pooler
         }
     }
@@ -47,4 +56,16 @@ public class Projectile : MonoBehaviour
     {
         _enemyTarget = enemy; 
     }
+
+    public void InitializeProjectile(TurretProjectile owner, float damage)
+    {
+        _turretOwner = owner;
+        _damage = damage;
+    }
+
+    //public void ResetProjectile()
+    //{
+    //    _enemyTarget = null;
+    //    transform.SetParent(null);
+    //}
 }

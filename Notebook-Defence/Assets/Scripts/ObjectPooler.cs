@@ -55,7 +55,7 @@ public class ObjectPooler<T> where T : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            T intance = _pool.Get();
+            T intance = CreateObject();
             _pool.Release(intance);
         }
     }

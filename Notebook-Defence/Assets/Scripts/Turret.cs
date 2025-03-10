@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 public class Turret : MonoBehaviour
 {
     [Header("Projectile")]
-    [SerializeField] private Transform projectileSpawnPos;
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] protected Transform projectileSpawnPosition;
+    [SerializeField] private Projectile projectilePrefab;
 
     [Header("Tower Settings")]
     [SerializeField] private float fireRate = 1f;
@@ -17,17 +17,15 @@ public class Turret : MonoBehaviour
     [SerializeField] private List<Enemy> _enemies = new List<Enemy>();
     public Enemy CurrentEnemyTarget;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //fireCooldown = 0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         GetCurrentEnemyTarget();
-        RotateProjectileTowardsTarget();
+       // RotateProjectileTowardsTarget();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -62,17 +60,19 @@ public class Turret : MonoBehaviour
         CurrentEnemyTarget = _enemies[0];
     }
 
-    private void RotateProjectileTowardsTarget()
-    {
-        if (_enemies.Count <= 0)
-        {
-            CurrentEnemyTarget = null;
-            return;
-        }
+    //private void RotateProjectileTowardsTarget()
+    //{
+    //    if (_enemies.Count <= 0)
+    //    {
+    //        CurrentEnemyTarget = null;
+    //        return;
+    //    }
 
-        Vector3 targetPos = CurrentEnemyTarget.transform.position - transform.position;
-        float angle = Vector3.SignedAngle(transform.up, targetPos, transform.forward);
-        projectileSpawnPos.rotation = Quaternion.Euler(0f, 0f, angle);
-    }
+    //    Vector3 targetPos = CurrentEnemyTarget.transform.position - transform.position;
+    //    float angle = Vector3.SignedAngle(transform.up, targetPos, transform.forward);
+    //    projectileSpawnPosition.rotation = Quaternion.Euler(0f, 0f, angle);
+    //}
 
+    public Transform GetProjectileSpawnPosition() { return projectileSpawnPosition; }
+    public Projectile GetCurrentProjectilePrefab() { return projectilePrefab; }
 }
