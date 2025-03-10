@@ -8,6 +8,8 @@ public class Spawner : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private int enemyCount = 10;
+    [SerializeField] float spawnRateIncrease = 1.0f;
+    [SerializeField] float minSpawnDelay = 0.25f;
     [SerializeField] private Enemy[] enemyPrefabs;
 
     [Header("Spawning")]
@@ -16,13 +18,21 @@ public class Spawner : MonoBehaviour
 
     private float _spawnTimer;
     private int _enemiesSpawned;
+    private int _enemyCount;
+    private float _delayBtwSpawns;
 
     private Dictionary<Enemy, ObjectPooler<Enemy>> _enemyPools;
+
+    private WaveController _waveController;
+    private bool waveActive = false;
+    private int _waveNum = 1;
 
     //Create the object pool
     private void Awake()
     {
         _enemyPools = new Dictionary<Enemy, ObjectPooler<Enemy>>();
+
+        _waveController = GetComponent<WaveController>();
 
         //Create pools dynamically based on the provided prefabs
         foreach (var enemyPrefab in enemyPrefabs)
@@ -33,14 +43,22 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        if (_enemiesSpawned >= enemyCount) return; //Check if all enemies have been spawned and return if so
-
-        _spawnTimer -= Time.deltaTime;
-        if (_spawnTimer < 0f)
+        if (waveActive)
         {
-            _spawnTimer = delayBtwSpawns;
-            SpawnEnemy();
+            if (_enemiesSpawned >= enemyCount)
+            {
+                waveActive = false;
+                return;
+            }
+
+            _spawnTimer -= Time.deltaTime;
+            if (_spawnTimer < 0f)
+            {
+                _spawnTimer = delayBtwSpawns;
+                SpawnEnemy();
+            }
         }
+        
     }
 
     private void SpawnEnemy()
@@ -57,5 +75,12 @@ public class Spawner : MonoBehaviour
             _enemiesSpawned++;
         }
     }
+
+    public void startWave(int waveNum)
+    {
+        waveActive = true;
+        _waveNum = waveNum;
+    }
+
 
 }
