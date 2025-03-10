@@ -11,13 +11,13 @@ public class Enemy : MonoBehaviour
     private float speed = 0.1f;
 
     private EnemyWayPoints wayPoints;
-
     private ObjectPooler<Enemy> _enemyPool;
     public EnemyHealth enemyHealth;
 
     void Start()
     {
         enemyHealth = GetComponent<EnemyHealth>();
+        GetComponent<Collider2D>().enabled = true;
         LoadWayPoints();
     }
 
@@ -62,6 +62,7 @@ public class Enemy : MonoBehaviour
         curTargetPoint = 0;
         enemyHealth.ResetHealth();
         gameObject.SetActive(false); // Hide the enemy
+        WaveController.Instance.DecreaseAliveEnemies();
         _enemyPool.ReleaseObject(this); // Return it to the pool
     }
 
