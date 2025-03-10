@@ -9,11 +9,13 @@ public class Turret : MonoBehaviour
     [SerializeField] protected Transform projectileSpawnPosition;
     [SerializeField] private Projectile projectilePrefab;
 
-    [Header("Tower Settings")]
+    [Header("Turret Settings")]
     [SerializeField, UnityEngine.Range(0.0f, 25.0f)] private float fireRate = 1f;
     private float currFireRate = 1f;
     [SerializeField, UnityEngine.Range(0.25f, 25.0f)] private float attackRange = 4f;
     private float currAttackRange = 4f;
+
+    [SerializeField] private int price;
 
     [Header("Enemy Targets")]
     [SerializeField] private List<Enemy> _enemies = new List<Enemy>();
@@ -83,5 +85,16 @@ public class Turret : MonoBehaviour
     }
 
     public Transform GetProjectileSpawnPosition() { return projectileSpawnPosition; }
+
     public Projectile GetCurrentProjectilePrefab() { return projectilePrefab; }
+
+    public virtual void SetPrice(int p)
+    {
+        price = p;
+    }
+
+    public int GetPrice()
+    {
+        return price;
+    }
 }
