@@ -2431,7 +2431,7 @@ GameObject:
   - component: {fileID: 1716778980}
   - component: {fileID: 1716778982}
   m_Layer: 0
-  m_Name: Enemy Controller - Singleton
+  m_Name: Enemy Manager - Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
