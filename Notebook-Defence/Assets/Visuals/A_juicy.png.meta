@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 51407823516f1814b9cbc2c718dc114c
+guid: f8ab1bc268e5c7e46bc03a01d1975e9a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3468244779728606172
-    second: map1_0
+      213: 2208360090288770856
+    second: A_juicy_0
+  - first:
+      213: 8291948354777355167
+    second: A_juicy_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,40 +99,49 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: map1_0
+      name: A_juicy_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1920
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 16
+        y: 32
+        width: 465
+        height: 410
+      alignment: 9
+      pivot: {x: 0.5076904, y: 0.4960611}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cd393d9604ea12030800000000000000
-      internalID: 3468244779728606172
+      spriteID: 82fcfcd3dcba5ae10800000000000000
+      internalID: 2208360090288770856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A_juicy_1
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 347
+        width: 103
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f939366981be21370800000000000000
+      internalID: 8291948354777355167
       vertices: []
       indices: 
       edges: []
@@ -138,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 708caeb41be3e0449994c2e541914ea5
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      map1_0: 3468244779728606172
+      A_juicy_0: 2208360090288770856
+      A_juicy_1: 8291948354777355167
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
