@@ -11,13 +11,15 @@ public class Enemy : MonoBehaviour
     private float speed = 0.1f;
 
     private EnemyWayPoints wayPoints;
-
     private ObjectPooler<Enemy> _enemyPool;
     public EnemyHealth enemyHealth;
+    private Collider2D collider;
 
     void Start()
     {
         enemyHealth = GetComponent<EnemyHealth>();
+        collider = GetComponent<Collider2D>();
+        collider.enabled = true;
         LoadWayPoints();
     }
 
