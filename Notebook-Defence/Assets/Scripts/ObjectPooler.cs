@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -68,6 +69,9 @@ public class ObjectPooler<T> where T : MonoBehaviour
 
     public void ReleaseObject(T obj)
     {
-        _pool.Release(obj); 
+        if (obj.gameObject.activeSelf)
+        {
+            _pool.Release(obj);
+        }
     }
 }
