@@ -786,7 +786,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1553968288}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1004489798
 SpriteRenderer:
@@ -1618,3 +1618,4 @@ SceneRoots:
   - {fileID: 389790292}
   - {fileID: 1716778981}
   - {fileID: 1351298784}
+  - {fileID: 1004489797}
