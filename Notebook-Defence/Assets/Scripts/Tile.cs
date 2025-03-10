@@ -16,19 +16,23 @@ public class Tile : MonoBehaviour
     {
         if(!isOccupied)
         {
-            Debug.Log("Disaply Mods");
+            Debug.Log("Clicked on available");
             onEmpty.Invoke();
         }
         else
         {
-            Debug.Log("Display Shop");
+            Debug.Log("Clicked on occupied");
             onOccupied.Invoke();
         }
     }
 
     public void AddTower(GameObject prefab)
     {
-        isOccupied = !isOccupied;
-        tower = Instantiate(prefab, transform.position, transform.rotation);
+        if(!isOccupied)
+        { 
+            tower = Instantiate(prefab, transform.position, transform.rotation); 
+        }
+
+        isOccupied = true;
     }
 }
