@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 289272197}
   - component: {fileID: 289272198}
   m_Layer: 5
-  m_Name: Manager
+  m_Name: UI Manager - Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2431,7 +2431,7 @@ GameObject:
   - component: {fileID: 1716778980}
   - component: {fileID: 1716778982}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: Enemy Controller - Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2449,12 +2449,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9dae0513c577c468646c427fa48ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCount: 15
+  baseEnemyCount: 10
+  linearGrowthFactor: 2
+  exponentialGrowthFactor: 1.15
+  randomVariation: 0.2
+  spawnRateIncrease: 1
+  minSpawnDelay: 0.25
   enemyPrefabs:
   - {fileID: 1481321552205046681, guid: 685934c21d0f02a48b17dbbde5db36f1, type: 3}
   - {fileID: 3572804628057304747, guid: c18894bb0a151af458b3fe6d647df063, type: 3}
   spawnPoint: {fileID: 1505584896}
-  delayBtwSpawns: 0.75
+  _baseDelayBtwSpawns: 1
 --- !u!4 &1716778981
 Transform:
   m_ObjectHideFlags: 0
@@ -2484,6 +2489,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawner: {fileID: 1716778980}
   aliveEnemies: 0
+  currentWave: 0
+  maxWave: 0
 --- !u!1 &1795952775
 GameObject:
   m_ObjectHideFlags: 0
@@ -2528,7 +2535,7 @@ GameObject:
   - component: {fileID: 1832414148}
   - component: {fileID: 1832414147}
   m_Layer: 0
-  m_Name: TileManager
+  m_Name: Tile Manager - Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
