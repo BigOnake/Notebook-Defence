@@ -107,7 +107,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPosition: {fileID: 0}
   curTargetPoint: 0
-  speed: 2
+  speed: 5
+  enemyHealth: {fileID: 0}
 --- !u!114 &3665524629542741540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +157,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 528873030528937166}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
