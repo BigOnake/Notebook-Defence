@@ -6,28 +6,46 @@ using UnityEngine.UIElements;
 public class Turret : MonoBehaviour
 {
     [Header("Projectile")]
-    [SerializeField] private Transform projectileSpawnPos;
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] protected Transform projectileSpawnPosition;
+    [SerializeField] private Projectile projectilePrefab;
 
     [Header("Tower Settings")]
-    [SerializeField] private float fireRate = 1f;
-    [SerializeField] private float attackRange = 4f;
+    [SerializeField, UnityEngine.Range(0.0f, 25.0f)] private float fireRate = 1f;
+    private float currFireRate = 1f;
+    [SerializeField, UnityEngine.Range(0.25f, 25.0f)] private float attackRange = 4f;
+    private float currAttackRange = 4f;
 
     [Header("Enemy Targets")]
     [SerializeField] private List<Enemy> _enemies = new List<Enemy>();
     public Enemy CurrentEnemyTarget;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private CircleCollider2D _detectionCollider;
+    private TurretProjectile _turretProjectile;
+
     void Start()
     {
-        //fireCooldown = 0f;
+        _detectionCollider = GetComponent<CircleCollider2D>();
+        _detectionCollider.radius = attackRange;
+        currAttackRange = attackRange;
+
+        _turretProjectile = GetComponent<TurretProjectile>();
+        _turretProjectile.ChangeFireDelay(fireRate);
+        currFireRate = fireRate;
     }
 
-    // Update is called once per frame
     void Update()
     {
         GetCurrentEnemyTarget();
-        RotateProjectileTowardsTarget();
+        if (currAttackRange != attackRange)
+        {
+            _detectionCollider.radius = attackRange;
+            currAttackRange = attackRange;
+        }
+        if (currFireRate != fireRate)
+        {
+            _turretProjectile.ChangeFireDelay(fireRate);
+            currFireRate = fireRate;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -53,6 +71,8 @@ public class Turret : MonoBehaviour
 
     private void GetCurrentEnemyTarget()
     {
+        _enemies.RemoveAll(enemy => enemy == null /*|| enemy.EnemyHealth.CurrentHealth <= 0*/);
+
         if (_enemies.Count <= 0)
         {
             CurrentEnemyTarget = null;
@@ -62,17 +82,6 @@ public class Turret : MonoBehaviour
         CurrentEnemyTarget = _enemies[0];
     }
 
-    private void RotateProjectileTowardsTarget()
-    {
-        if (_enemies.Count <= 0)
-        {
-            CurrentEnemyTarget = null;
-            return;
-        }
-
-        Vector3 targetPos = CurrentEnemyTarget.transform.position - transform.position;
-        float angle = Vector3.SignedAngle(transform.up, targetPos, transform.forward);
-        projectileSpawnPos.rotation = Quaternion.Euler(0f, 0f, angle);
-    }
-
+    public Transform GetProjectileSpawnPosition() { return projectileSpawnPosition; }
+    public Projectile GetCurrentProjectilePrefab() { return projectilePrefab; }
 }

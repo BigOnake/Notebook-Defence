@@ -53,9 +53,7 @@ public class Spawner : MonoBehaviour
         {
             Enemy instance = pool.GetObject();
             instance.transform.position = spawnPoint.position;
-
-            instance.SetSpawnPosition(spawnPoint);
-
+            instance.Initialize(pool, spawnPoint);
             _enemiesSpawned++;
         }
     }

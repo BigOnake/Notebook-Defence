@@ -8,11 +8,20 @@ public class Projectile : MonoBehaviour
     [SerializeField] protected float moveSpeed = 10f;
     [SerializeField] private float minDistanceToDealDamage = 0.1f;
 
-    public TurretProjectile TurretOwner {  get; set; }
-
-    public float Damage {  get; set; }
-
+    private float _damage = 5f;
+    private TurretProjectile _turretOwner;
     protected Enemy _enemyTarget;
+
+    public float Damage 
+    { 
+        get => _damage; 
+        set => _damage = value; 
+    }
+    public TurretProjectile TurretOwner
+    {
+        get => _turretOwner;
+        set => _turretOwner = value;
+    }
 
     protected virtual void Update()
     {
@@ -29,22 +38,39 @@ public class Projectile : MonoBehaviour
         float distanceToTarget = (_enemyTarget.transform.position - transform.position).magnitude;
         if (distanceToTarget < minDistanceToDealDamage)
         {
-            OnEnemyHit?.Invoke(_enemyTarget, Damage);
-            _enemyTarget.EnemyHealth.DealDamage(Damage);
-            TurretOwner.ResetTurretProjectile();
-            //Return to object pooler
+            OnEnemyHit?.Invoke(_enemyTarget, _damage); //emitt that an enemy got hit
+            _enemyTarget.enemyHealth.DealDamage(_damage);
+            _enemyTarget = null;
+            gameObject.SetActive(false);
+            //_turretOwner.ResetTurretProjectile();
+            _turretOwner.ReleaseProjectile(this);
         }
     }
 
     private void RotateProjectile()
     {
-        Vector3 enemyPos = _enemyTarget.transform.position - transform.position;
-        float angle = Vector3.SignedAngle(transform.up, enemyPos, transform.forward);
-        transform.Rotate(0f, 0f, angle);
+        if (_enemyTarget != null)
+        {
+            Vector3 enemyPos = _enemyTarget.transform.position - transform.position;
+            float angle = Vector3.SignedAngle(transform.up, enemyPos, transform.forward);
+            transform.Rotate(0f, 0f, angle);
+        }
     }
 
     public void SetEnemy(Enemy enemy)
     {
         _enemyTarget = enemy; 
     }
+
+    public void InitializeProjectile(TurretProjectile owner, float damage)
+    {
+        _turretOwner = owner;
+        _damage = damage;
+    }
+
+    //public void ResetProjectile()
+    //{
+    //    _enemyTarget = null;
+    //    transform.SetParent(null);
+    //}
 }

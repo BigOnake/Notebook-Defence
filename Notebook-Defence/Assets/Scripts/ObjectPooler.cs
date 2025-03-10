@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -15,6 +16,7 @@ public class ObjectPooler<T> where T : MonoBehaviour
         _parent = parent;
 
         _poolContainer = new GameObject($"Pool - {_prefab.name}");
+        _poolContainer.transform.SetParent( parent );
 
         _pool = new ObjectPool<T>(
             CreateObject,
@@ -55,7 +57,7 @@ public class ObjectPooler<T> where T : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            T intance = _pool.Get();
+            T intance = CreateObject();
             _pool.Release(intance);
         }
     }
@@ -67,6 +69,9 @@ public class ObjectPooler<T> where T : MonoBehaviour
 
     public void ReleaseObject(T obj)
     {
-        _pool.Release(obj); 
+        if (obj.gameObject.activeSelf)
+        {
+            _pool.Release(obj);
+        }
     }
 }
