@@ -12,11 +12,21 @@ public class Enemy : MonoBehaviour
 
     private EnemyWayPoints wayPoints;
 
-    private ObjectPool<Enemy> _enemyPool;
+    private ObjectPooler<Enemy> _enemyPool;
+    public EnemyHealth enemyHealth;
 
     void Start()
     {
+        enemyHealth = GetComponent<EnemyHealth>();
         LoadWayPoints();
+    }
+
+    //initializes values after being pulled from pool by spawner
+    public void Initialize(ObjectPooler<Enemy> pool, Transform spawnPoint)
+    {
+        _enemyPool = pool;
+        spawnPosition = spawnPoint;
+        transform.position = spawnPoint.position;
     }
 
     void Update()
@@ -46,9 +56,17 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void SetSpawnPosition(Transform spawnPoint)
+    // Resets enemies to be pooled
+    public void ResetEnemy()
     {
-        spawnPosition = spawnPoint;
-        transform.position = spawnPoint.position;
+        curTargetPoint = 0;
+        enemyHealth.ResetHealth();
+        gameObject.SetActive(false); // Hide the enemy
+        _enemyPool.ReleaseObject(this); // Return it to the pool
     }
+
+    //public void ReleaseEnemy()
+    //{
+    //    _enemyPool.ReleaseObject();
+    //}
 }
