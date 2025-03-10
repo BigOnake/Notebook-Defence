@@ -7,14 +7,19 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class Spawner : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private int enemyCount = 10;
+    [SerializeField] private int baseEnemyCount = 10;
+    [SerializeField] private float linearGrowthFactor = 2f; // Enemies added per wave in early game
+    [SerializeField] private float exponentialGrowthFactor = 1.15f; // Exponential scaling for later waves
+    [SerializeField] private float randomVariation = 0.2f; // Random variation factor (e.g., ±20%)
+
     [SerializeField] float spawnRateIncrease = 1.0f;
     [SerializeField] float minSpawnDelay = 0.25f;
+    [SerializeField] float maxSpawnDelay = 0.25f;
     [SerializeField] private Enemy[] enemyPrefabs;
 
     [Header("Spawning")]
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private float delayBtwSpawns = 1f;
+    [SerializeField] private float _baseDelayBtwSpawns = 1f;
 
     private float _spawnTimer;
     private int _enemiesSpawned;
@@ -37,35 +42,33 @@ public class Spawner : MonoBehaviour
         //Create pools dynamically based on the provided prefabs
         foreach (var enemyPrefab in enemyPrefabs)
         {
-            _enemyPools[enemyPrefab] = new ObjectPooler<Enemy>(enemyPrefab, transform, enemyCount, enemyCount * 2);
+            _enemyPools[enemyPrefab] = new ObjectPooler<Enemy>(enemyPrefab, transform, _enemyCount, _enemyCount * 2);
         }
     }
 
     void Update()
     {
-        if (waveActive)
-        {
-            if (_enemiesSpawned >= enemyCount)
-            {
-                waveActive = false;
-                return;
-            }
+        if (!waveActive) return;
 
-            _spawnTimer -= Time.deltaTime;
-            if (_spawnTimer < 0f)
-            {
-                _spawnTimer = delayBtwSpawns;
-                SpawnEnemy();
-            }
+        if (_enemiesSpawned >= _enemyCount)
+        {
+            waveActive = false;
+            return;
         }
-        
+
+        _spawnTimer -= Time.deltaTime;
+        if (_spawnTimer <= 0f)
+        {
+            _spawnTimer = _delayBtwSpawns;
+            SpawnEnemy();
+        }
     }
 
     private void SpawnEnemy()
     {
         if (enemyPrefabs.Length == 0) return;   
 
-        Enemy randomEnemy = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)];
+        Enemy randomEnemy = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)]; //change to only spawn certain enemies later
 
         if (_enemyPools.TryGetValue(randomEnemy, out var pool))
         {
@@ -76,11 +79,21 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public void startWave(int waveNum)
+    public void StartWave(int waveNum)
     {
         waveActive = true;
         _waveNum = waveNum;
+
+        // Scale enemy count with linear and exponential growth
+        float expectedEnemyCount = baseEnemyCount + (waveNum * linearGrowthFactor) * Mathf.Pow(exponentialGrowthFactor, waveNum);
+
+        float variationFactor = UnityEngine.Random.Range(1f - randomVariation, 1f + randomVariation);
+        _enemyCount = Mathf.RoundToInt(expectedEnemyCount * variationFactor);
+        _delayBtwSpawns = Mathf.Max(_baseDelayBtwSpawns * Mathf.Pow(spawnRateIncrease, waveNum - 1), minSpawnDelay);
+
+        _enemiesSpawned = 0;
+        _spawnTimer = _delayBtwSpawns;
     }
 
-
+    public int GetWaveEnemyCount() { return _enemyCount; }
 }
