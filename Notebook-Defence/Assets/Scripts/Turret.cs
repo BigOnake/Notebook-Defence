@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TowerTurret : MonoBehaviour
+public class Turret : MonoBehaviour
 {
     [Header("Projectile")]
     [SerializeField] private Transform projectileSpawnPos;
@@ -15,7 +15,7 @@ public class TowerTurret : MonoBehaviour
 
     [Header("Enemy Targets")]
     [SerializeField] private List<Enemy> _enemies = new List<Enemy>();
-    [SerializeField] private Enemy CurrentEnemyTarget;
+    public Enemy CurrentEnemyTarget;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
