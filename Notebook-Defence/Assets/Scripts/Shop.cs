@@ -1,15 +1,16 @@
+using NUnit.Framework;
+using System;
 using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    public static Shop Instance;
-    [SerializeField] private int money = 50;
-    [SerializeField] private int maxMoney = 50;
-    [SerializeField] private int minMoney = 50;
+    public GameObject turretPrefab;
 
-    private void Start()
+    public void BuyTurret()
     {
-        Instance = this;
+        if (turretPrefab)
+            MoneyManager.Instance.BuyTurret(turretPrefab);
+        else
+            Debug.Log(this.name + " doesn't have a turret prefub");
     }
-
 }

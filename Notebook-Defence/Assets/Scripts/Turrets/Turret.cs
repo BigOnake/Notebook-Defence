@@ -15,7 +15,7 @@ public class Turret : MonoBehaviour
     [SerializeField, UnityEngine.Range(0.25f, 25.0f)] private float attackRange = 4f;
     private float currAttackRange = 4f;
 
-    [SerializeField] private int price;
+    [SerializeField] private int price = 0;
 
     [Header("Enemy Targets")]
     [SerializeField] private List<Enemy> _enemies = new List<Enemy>();

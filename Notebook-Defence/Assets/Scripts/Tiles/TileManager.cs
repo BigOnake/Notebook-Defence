@@ -11,6 +11,11 @@ public class TileManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Update()
+    {
+        MoneyManager.Instance.onTurretPurchase += CreateTower;
+    }
+
     public void CreateTower(GameObject towerPrefab)
     {
         if(isSelected && selectedTile)
