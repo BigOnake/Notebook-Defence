@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8648367261673533003}
   - component: {fileID: 4518600675762726102}
   m_Layer: 0
-  m_Name: TestProjectile
+  m_Name: BasicProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 2734590955584488060, guid: f87d686f0c71cfb4c9140c01e039e74b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
