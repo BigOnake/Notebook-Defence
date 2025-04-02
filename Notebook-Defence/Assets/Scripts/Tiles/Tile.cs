@@ -31,7 +31,7 @@ public class Tile : MonoBehaviour
         if(!isOccupied)
         { 
             tower = Instantiate(prefab, transform.position, transform.rotation);
-            ManagerUI.Instance.DisplayUpgrades();
+            //ManagerUI.Instance.DisplayUpgrades();
         }
 
         isOccupied = true;
