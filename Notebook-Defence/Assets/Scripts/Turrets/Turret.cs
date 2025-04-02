@@ -71,15 +71,22 @@ public class Turret : MonoBehaviour
 
     private void GetCurrentEnemyTarget()
     {
-        _enemies.RemoveAll(enemy => enemy == null /*|| enemy.EnemyHealth.CurrentHealth <= 0*/);
+        for (int i = _enemies.Count; i >= 0 ; i--) //loop through and remove all null enemies
+        {
+            if (_enemies[i] == null)
+            {
+                _enemies.RemoveAt(i);
+            }
+        }
 
         if (_enemies.Count <= 0)
         {
             CurrentEnemyTarget = null;
-            return;
         }
-
-        CurrentEnemyTarget = _enemies[0];
+        else
+        {
+            CurrentEnemyTarget = _enemies[0];
+        }
     }
 
     public Transform GetProjectileSpawnPosition() { return projectileSpawnPosition; }

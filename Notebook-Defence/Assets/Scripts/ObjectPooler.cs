@@ -34,7 +34,8 @@ public class ObjectPooler<T> where T : MonoBehaviour
     private T CreateObject()
     {
         T instance = UnityEngine.Object.Instantiate(_prefab);
-        instance.transform.SetParent(_poolContainer.transform); 
+        instance.transform.SetParent(_poolContainer.transform); //assign as child to its objectpooler gameobject
+        instance.gameObject.SetActive(false); //ensure it is inactive at first
         return instance;
     }
 
@@ -57,8 +58,8 @@ public class ObjectPooler<T> where T : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            T intance = CreateObject();
-            _pool.Release(intance);
+            T instance = CreateObject();
+            _pool.Release(instance);
         }
     }
 
@@ -69,9 +70,15 @@ public class ObjectPooler<T> where T : MonoBehaviour
 
     public void ReleaseObject(T obj)
     {
-        if (obj.gameObject.activeSelf)
+        if (obj.gameObject.activeSelf) //could maybe be removed as it may be redundant, untested though
         {
             _pool.Release(obj);
         }
+    }
+
+    public void ClearPool()
+    {
+        _pool.Clear();
+        UnityEngine.Object.Destroy(_poolContainer);
     }
 }

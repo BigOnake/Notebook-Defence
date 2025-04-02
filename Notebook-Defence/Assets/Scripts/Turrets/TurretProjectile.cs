@@ -30,7 +30,7 @@ public class TurretProjectile : MonoBehaviour
             LoadProjectile();
         }
 
-        if (Time.time > _nextAttackTime && _currentProjectileLoaded != null) //figure what this means
+        if (Time.time > _nextAttackTime && _currentProjectileLoaded != null)
         {
             if (_turret.CurrentEnemyTarget != null /*&& _turret.CurrentEnemyTarget.EnemyHealth.CurrentHealth > 0f*/)
             {
