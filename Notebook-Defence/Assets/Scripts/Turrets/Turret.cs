@@ -71,7 +71,7 @@ public class Turret : MonoBehaviour
 
     private void GetCurrentEnemyTarget()
     {
-        for (int i = _enemies.Count; i >= 0 ; i--) //loop through and remove all null enemies
+        for (int i = _enemies.Count - 1; i >= 0 ; i--) //loop through and remove all null enemies
         {
             if (_enemies[i] == null)
             {
