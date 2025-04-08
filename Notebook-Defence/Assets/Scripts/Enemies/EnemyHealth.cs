@@ -4,6 +4,8 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private float initialHealth = 10f;
     //[SerializeField] private float maxHealth = 10f;
+    [SerializeField]
+    private ParticleSystem deathParticlesPrefab;
 
     public float CurrentHealth { get; private set; }
 
@@ -32,6 +34,10 @@ public class EnemyHealth : MonoBehaviour
 
     protected virtual void Die()
     {
+        if (deathParticlesPrefab != null)
+        {
+            Instantiate(deathParticlesPrefab, transform.position, Quaternion.identity);
+        }
         _enemy.ResetEnemy();
     }
 }

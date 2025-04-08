@@ -12,16 +12,18 @@ public class Projectile : MonoBehaviour
     protected Enemy _enemyTarget;
     private Collider2D _collider;
 
-    public float Damage
-    { 
-        get => _damage; 
-        set => _damage = value; 
-    }
-    public TurretProjectile TurretOwner
-    {
-        get => _turretOwner;
-        set => _turretOwner = value;
-    }
+    public Enemy EnemyTarget => _enemyTarget;
+
+    //public float Damage
+    //{ 
+    //    get => _damage; 
+    //    set => _damage = value; 
+    //}
+    //public TurretProjectile TurretOwner
+    //{
+    //    get => _turretOwner;
+    //    set => _turretOwner = value;
+    //}
 
     protected virtual void Update() // modify this so that it simply moves projectile or checks components and then handles updates
     {

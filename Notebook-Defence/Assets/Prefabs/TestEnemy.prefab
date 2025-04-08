@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1481321552205046681}
   - component: {fileID: 3665524629542741540}
   - component: {fileID: 2026767497768098419}
-  - component: {fileID: 6882308300385283490}
+  - component: {fileID: 4399444156497457394}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Enemy
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialHealth: 10
+  deathParticlesPrefab: {fileID: 2652900217948512361, guid: e0b9ef8d124e8ab4f9dd1a8e762818e0, type: 3}
 --- !u!50 &2026767497768098419
 Rigidbody2D:
   serializedVersion: 5
@@ -147,8 +148,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &6882308300385283490
-CircleCollider2D:
+--- !u!70 &4399444156497457394
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -181,5 +182,6 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.09}
-  m_Radius: 0.5
+  m_Offset: {x: -0.098863095, y: -0.05203247}
+  m_Size: {x: 2.165439, y: 3.728949}
+  m_Direction: 0
